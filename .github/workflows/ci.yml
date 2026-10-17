@@ -18,8 +18,15 @@ jobs:
 
       - name: Validate Application
         run: |
-          test -f app/index.html
-          grep -q "DevOps App" app/index.html
+         if ! test -f app/index.html; then
+           echo "::error::Application file is missing"
+           exit 1
+         fi
+
+        if ! grep -q "DevOps App" app/index.html; then
+          echo "::error::Expected text 'DevOps App' not found"
+          exit 1
+        fi
 
       - name: Build Docker Image
         run: docker build -t k8s-cicd-lab:ci .
