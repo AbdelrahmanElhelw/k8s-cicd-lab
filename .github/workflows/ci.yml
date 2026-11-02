@@ -43,8 +43,8 @@ jobs:
 
 
     permissions:
-      contents: read
-      packages: write
+      contents: write   #To write in Repo file " Kubernetes Manifests"
+      packages: write   #To push Image to GHCR
 
     steps:
       - name: Checkout Repository
@@ -66,4 +66,25 @@ jobs:
 
           docker push "$IMAGE"
           echo " published : $IMAGE"
+
+      - name: Update Kubernetes Image Tag
+        run: |
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}:sha-${GITHUB_SHA::7}"
+
+          sed -i -E "s|(^[[:space:]]*image:[[:space:]]*).*|\1${IMAGE}|" k8s/deployment.yaml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet -- k8s/deployment.yaml; then
+             echo "Image tag already up to date"
+             exit 0
+          fi
+
+          git add k8s/deployment.yaml
+          git commit -m "chore: update deployment image [skip ci]"
+          git push origin HEAD:main
+
+
+          
 
