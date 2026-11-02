@@ -81,7 +81,7 @@ jobs:
              exit 0
           fi
 
-          git add k8s/deployment.yaml
+          git add k8s/deployment.yml
           git commit -m "chore: update deployment image [skip ci]"
           git push origin HEAD:main
 
