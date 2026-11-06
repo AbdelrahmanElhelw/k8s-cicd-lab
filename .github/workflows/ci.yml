@@ -93,7 +93,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-    permission:
+    permissions:
       contents: read
       packages: write
 
