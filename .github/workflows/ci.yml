@@ -85,7 +85,7 @@ jobs:
           fi
 
           git add k8s/deployment.yml
-          git commit -m "chore: update deployment image [skip ci]"
+          git commit -m "chore: update deployment image"
           git push origin HEAD:main
 
   release:
