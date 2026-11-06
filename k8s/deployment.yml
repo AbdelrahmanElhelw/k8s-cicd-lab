@@ -14,6 +14,6 @@ spec:
       spec:
         containers:
           - name: nginx
-            image: ghcr.io/abdelrahmanelhelw/k8s-cicd-lab:sha-1d1ab9b
+            image: ghcr.io/abdelrahmanelhelw/k8s-cicd-lab:sha-bd8bf9e
             ports:
               - containerPort: 80 
