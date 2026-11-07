@@ -115,7 +115,7 @@ jobs:
         env:
           VERSION: ${{ github.ref_name }}
         run: |
-          SOURCE_IMAGE=$(awk '$1== 'image:' {print $2; exit} k8s/deploymeny.yml)
+          SOURCE_IMAGE=$(awk '$1== "image:" {print $2; exit}' k8s/deployment.yml)
           RELEASE_IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}:${VERSION}"
 
           docker buildx imagetools inspect "$SOURCE_IMAGE"
