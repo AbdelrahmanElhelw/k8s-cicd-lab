@@ -45,7 +45,7 @@ jobs:
 
           docker run -d --rm --name ci-app -p 127.0.0.1:3001:3000 k8s-cicd-lab:ci
 
-          curl --retry 10 --retry-connrefused --retry-delay 1 -fsS http://127.0.0.1:3001/health | grep -q '"status":"ok"'
+          curl --retry 10 --retry-all-errors --retry-delay 1 -fsS http://127.0.0.1:3001/health | grep -q '"status":"ok"'
 
           curl -fsS http://127.0.0.1:3001/api/status | grep -q '"app":"DevOps App"'
 
