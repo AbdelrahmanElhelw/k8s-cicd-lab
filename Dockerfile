@@ -1,5 +1,17 @@
-From nginx:alpine
+FROM node:26-alpine
 
-COPY app/index.html  /usr/share/nginx/html/index.html
+WORKDIR /app
 
-EXPOSE 80
+COPY package*.json ./
+
+RUN npm ci --omit=dev
+
+COPY server.js ./
+COPY app.js ./
+COPY app/ ./app/
+
+USER node
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

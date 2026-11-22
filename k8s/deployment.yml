@@ -13,7 +13,25 @@ spec:
           app: devops-app
       spec:
         containers:
-          - name: nginx
+          - name: node-app
             image: ghcr.io/abdelrahmanelhelw/k8s-cicd-lab:sha-8da791c
             ports:
-              - containerPort: 80 
+              - containerPort: 3000
+
+
+            readinessProbe:
+              httpGet:
+                path: /health
+                port: 3000
+              periodSeconds: 5
+              timeoutSeconds: 2
+              failureThreshold: 2
+
+            livenessProbe:
+              httpGet:
+                path: /health
+                port: 3000
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 2
+              failureThreshold: 3

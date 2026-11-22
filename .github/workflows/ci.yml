@@ -38,6 +38,19 @@ jobs:
       - name: Build Docker Image
         run: docker build -t k8s-cicd-lab:ci .
 
+      - name: API Smoke Tests
+        run: |
+
+          set -euo pipefail
+
+          docker run -d --rm --name ci-app -p 127.0.0.1:3001:3000 k8s-cicd-lab:ci
+
+          curl --retry 10 --retry-connrefused --retry-delay 1 -fsS http://127.0.0.1:3001/health | grep -q '"status":"ok"'
+
+          curl -fsS http://127.0.0.1:3001/api/status | grep -q '"app":"DevOps App"'
+
+          echo "API Smoke Tests Passed"
+
   publish:
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
