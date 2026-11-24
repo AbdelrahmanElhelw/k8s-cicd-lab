@@ -14,7 +14,7 @@ spec:
       spec:
         containers:
           - name: node-app
-            image: ghcr.io/abdelrahmanelhelw/k8s-cicd-lab:sha-a3ab2c0
+            image: ghcr.io/abdelrahmanelhelw/k8s-cicd-lab:sha-bdeab7a
             ports:
               - containerPort: 3000
 
